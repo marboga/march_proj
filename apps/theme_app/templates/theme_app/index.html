@@ -57,7 +57,20 @@
   <p>{{ activity.name }} - {{ activity.location.name }}</p>
   {% endfor %}
 
+  <form class="" action="/lockbox" method="post">
+    {% csrf_token %}
+    <label for="label">Label:</label>
+    <input type="text" name="label" value="">
+    <label for="passphrase">Passphrase:</label>
+    <input type="text" name="passphrase" value="">
+    <input class="button-primary"  type="submit" name="" value="Submit!">
+  </form>
 
+  {% for box in boxes %}
+  <p>
+    {{ box.label }} {{ box.key }}
+  </p>
+  {% endfor %}
 
   </body>
 </html>

@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+import bcrypt
 
 # from ..other_app.models import ClassName
 
@@ -81,3 +82,36 @@ class Activity(models.Model):
 
     def __unicode__(self):
         return self.name
+
+class LockboxManager(models.Manager):
+    def validate_lockbox(self, data):
+        print data
+        errors = []
+        #validations
+
+        if errors:
+            return (False, errors)
+        else:
+            #create our Lockbox
+            first_obj = Lockbox.objects.get(id=1)
+            old_pass = first_obj.key.encode()
+
+            hashed_key = bcrypt.hashpw(
+                data['passphrase'].encode(),
+                old_pass
+            )
+            print "\n\n", "*"*50, "\nhere is hash", hashed_key
+            box = self.create(
+                label=data['label'],
+                key=hashed_key
+            )
+            return (True, box)
+
+
+class Lockbox(models.Model):
+    label = models.CharField(max_length=200)
+    key = models.CharField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    objects = LockboxManager()
