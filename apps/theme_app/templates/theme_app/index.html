@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Our App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  </head>
+  <body>
+    {% for item in request.session.list %}
+      <p class="{{ item.0 }}">{{ item.1 }}</p>
+    {% endfor %}
+    <h1>{{ request.session.name }}</h1>
+
+    {% for error in messages %}
+      {{ error }}
+    {% endfor %}
+    <h3>Create a Location</h3>
+    <form class="" action="/process" method="post">
+      {% csrf_token %}
+      <label for="name">Name:</label>
+      <input type="text" name="name" value="">
+      <label for="latitude">Latitude:</label>
+      <input type="number" step="0.0001" name="latitude" value="">
+      <label for="longitude">Longitude:</label>
+      <input type="number" step="0.0001" name="longitude" value="">
+      <input class="button-primary" type="submit" name="create_location" value="Submit">
+    </form>
+
+    <h3>Create an Activity</h3>
+    <form class="activity_form" action="/activity/create" method="post">
+      {% csrf_token %}
+
+      <label for="name">Name:</label>
+      <input type="text" name="name" value="">
+
+      <label for="location_id">Location:</label>
+      <select class="" name="location_id">
+        {% for loc in locations %}
+        <option value="{{ loc.id }}">{{ loc.name }}</option>
+        {% endfor %}
+      </select>
+
+      <input type="submit" name="create_activity" value="Create an Activity">
+    </form>
+
+  <h3>Locations</h3>
+    {% for loc in locations %}
+      <p>{{ loc.id }} {{ loc.name }} {{ loc.created_at }}</p>
+      <ul>
+        <li>{{ loc.latitude }}</li>
+        <li>{{ loc.longitude }}</li>
+      </ul>
+    {% endfor %}
+
+  <h3>Activities</h3>
+  {% for activity in activities %}
+  <p>{{ activity.name }} - {{ activity.location.name }}</p>
+  {% endfor %}
+
+
+
+  </body>
+</html>
