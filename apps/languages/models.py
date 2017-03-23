@@ -28,7 +28,7 @@ class LanguageManager(models.Manager):
 
 class Language(models.Model):
     name = models.TextField(max_length=255)
-    locations_spoken = models.ForeignKey(Location, related_name="spoken_languages", null=True)
+    locations_spoken = models.ManyToManyField(Location, related_name="spoken_languages", null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
