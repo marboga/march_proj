@@ -1,5 +1,5 @@
 from __future__ import unicode_literals
-
+# from ..languages.models import Language
 from django.db import models
 import bcrypt
 
@@ -111,6 +111,7 @@ class LockboxManager(models.Manager):
 class Lockbox(models.Model):
     label = models.CharField(max_length=200)
     key = models.CharField(max_length=200)
+
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

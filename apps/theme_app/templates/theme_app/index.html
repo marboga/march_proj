@@ -11,6 +11,8 @@
     {% endfor %}
     <h1>{{ request.session.name }}</h1>
 
+    <a href="{% url 'languages_app:index' %}">Check out the Languages Page</a>
+
     {% for error in messages %}
       {{ error }}
     {% endfor %}
@@ -45,11 +47,10 @@
 
   <h3>Locations</h3>
     {% for loc in locations %}
-      <p>{{ loc.id }} {{ loc.name }} {{ loc.created_at }}</p>
-      <ul>
-        <li>{{ loc.latitude }}</li>
-        <li>{{ loc.longitude }}</li>
-      </ul>
+      <a href="{% url 'theme_app:show' loc.id %}">
+        Learn more about {{ loc.name }}
+      </a>
+      <p>{{ loc.name }} </p>
     {% endfor %}
 
   <h3>Activities</h3>

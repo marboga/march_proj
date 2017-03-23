@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django_extensions',
     'apps.theme_app',
+    'apps.languages',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

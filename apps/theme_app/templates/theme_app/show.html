@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Show {{ one.name }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  </head>
+  <body>
+    {% for loc in location %}
+    {{loc.id}} <h3>{{ loc.name }}</h3>
+    <p>Latitude:{{ loc.latitude }} </p>
+    <p>Longitude: {{ loc.longitude }}</p>
+    {% endfor %}
+  </body>
+</html>

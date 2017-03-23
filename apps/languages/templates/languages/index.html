@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
+  </head>
+  <body>
+    <h1>languages app</h1>
+    <form action="{% url 'languages_app:process' %}" method="post">
+      {% csrf_token %}
+      <label for="language">Language:</label>
+      <select class="" name="language">
+        {% for language in languages %}
+          <option value="{{ language.id }}">{{ language.name }}</option>
+        {% endfor %}
+      </select>
+      <label for="location">Location:</label>
+      <select class="" name="location">
+        {% for location in locations %}
+          <option value="{{ location.id }}">{{ location.name }}</option>
+        {% endfor %}
+      </select>
+      <label for=""></label>
+      <input class="button-primary" type="submit" value="Add a location to a language">
+    </form>
+
+    <form class="" action="{% url 'languages_app:new' %}" method="post">
+      {% csrf_token %}
+      <label for="language">Language name:</label>
+      <input type="text" name="language" value="">
+      <input type="submit" name="" value="Submit">
+    </form>
+
+    {% for language in languages %}
+      <p>{{ language.name }}</p>
+      {% for location in language.locations_spoken.all %}
+      <ul>
+        <li>{{ location.name }}</li>
+      </ul>
+      {% endfor %}
+    {% endfor %}
+
+  </body>
+</html>

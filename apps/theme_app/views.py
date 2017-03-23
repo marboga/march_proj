@@ -7,10 +7,13 @@ from .models import Location, Activity, Lockbox
 def index(request):
 
     context = {
-        'locations': Location.objects.filter(activities__name__contains="Smile"),
+        'locations': Location.objects.all(),
         'activities': Activity.objects.all(),
         'boxes': Lockbox.objects.all(),
     }
+
+    for location in context['locations']:
+        print "locations ---", location.spoken_languages
 
     for key, val in context.items():
         print key
@@ -29,6 +32,7 @@ def process(request):
     valid, response = Location.objects.validate_location(request.POST)
     if valid is True:
         request.session.name = response.name
+        print "location created===>", response.id
     else:
         for error in response:
             print error
@@ -38,7 +42,7 @@ def process(request):
     # what_comes_back = invocation()
     # print type(what_comes_back)
     # print my_variable
-    return redirect('/')
+    return redirect('theme_app:index')
 
 def create_activity(request):
     if request.method == 'POST':
@@ -48,12 +52,12 @@ def create_activity(request):
 
         if valid:
             print "woop made it, ", response
-            return redirect('/')
+            return redirect('theme_app:index')
         else:
             for error in response:
                 messages.error(request, error)
 
-    return redirect('/')
+    return redirect('theme_app:index')
 
 def lockbox(request):
     if request.method == 'POST':
@@ -67,4 +71,11 @@ def lockbox(request):
                 messages.error(request, error)
 
 
-    return redirect('/')
+    return redirect('theme_app:index')
+
+def show(request, id):
+    print "in show method, id=", id
+    context = {
+        'location': Location.objects.filter(id=id)
+    }
+    return render(request, 'theme_app/show.html', context)
