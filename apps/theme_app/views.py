@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Location, Activity, Lockbox
 
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+
+from .forms import UserCreatorForm
 
 # Create your views here.
 def index(request):
@@ -10,16 +14,18 @@ def index(request):
         'locations': Location.objects.all(),
         'activities': Activity.objects.all(),
         'boxes': Lockbox.objects.all(),
+        'form': UserCreatorForm(),
+        'users': User.objects.all(),
     }
 
     for location in context['locations']:
         print "locations ---", location.spoken_languages
-
-    for key, val in context.items():
-        print key
-        print val
-        for obj in val:
-            print obj.id
+    #
+    # for key, val in context.items():
+    #     print key
+    #     print val
+    #     for obj in val:
+    #         print obj.id
 
     return render(request, 'theme_app/index.html', context)
 
@@ -79,3 +85,14 @@ def show(request, id):
         'location': Location.objects.filter(id=id)
     }
     return render(request, 'theme_app/show.html', context)
+
+def create_user(request):
+    form = UserCreationForm(request.POST)
+    print form
+    print form.is_valid()
+    if form.is_valid():
+        user = form.cleaned_data.save()
+        # user.save()
+        print user.username, "<<- username"
+
+    return redirect('theme_app:index')

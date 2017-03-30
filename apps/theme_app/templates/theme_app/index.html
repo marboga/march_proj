@@ -73,5 +73,15 @@
   </p>
   {% endfor %}
 
+  {% for user in users %}
+    <p>{{ user.username }}</p>
+  {% endfor %}
+
+  <form class="" action="/create_user" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" name="" value="Create a new user">
+  </form>
+
   </body>
 </html>

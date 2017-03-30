@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^lockbox$', views.lockbox, name="lockbox"),
     url(r'^activity/create$', views.create_activity, name="create_activity"),
     url(r'^activity/(?P<id>\d+)$', views.show, name="show"),
+    url(r'^create_user$', views.create_user, name="create_user"),
 ]
